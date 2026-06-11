@@ -1,5 +1,7 @@
 package com.example.lbg
 
+import kotlinx.coroutines.runBlocking
+
 fun demo(): Map<String, Pair<Int, Int>> {
     val logs = arrayOf(
         arrayOf("58523", "user_1", "resource_1"),
@@ -40,7 +42,18 @@ fun isPalindrome(input: String): Boolean {
     return cleanInput == cleanInput.reversed()
 }
 
-fun main() {
+/*fun main() {
     val testString = "A man, a plan, a canal: Panama"
     println("Is \"$testString\" a palindrome? ${isPalindrome(testString)}")
+}*/
+
+fun main()= runBlocking {
+
+    val demoList = listOf("Daya", "Julie", "Diya", "Jiya")
+    demoList.filter { item ->
+        item.startsWith("D")
+
+    }.forEach { item -> println("Item-$item") }
+    println("Hello")
+
 }
