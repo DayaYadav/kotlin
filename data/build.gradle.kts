@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -61,4 +62,9 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     //Navigation
     implementation("androidx.navigation:navigation-compose:2.5.3")
+
+    val roomVersion = "2.6.1"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion") // Annotation processor
+    implementation("androidx.room:room-ktx:$roomVersion") // Kotlin Extensions
 }

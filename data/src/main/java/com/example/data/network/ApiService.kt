@@ -14,6 +14,8 @@ interface ApiService {
 
     @GET("posts")
     suspend fun  getPost(): Response<PostDataModel>
+
+
 }
 
 

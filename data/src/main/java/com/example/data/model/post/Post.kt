@@ -7,5 +7,6 @@ data class Post(
     val tags: List<String>,
     val title: String,
     val userId: Int,
-    val views: Int
+    val views: Int,
+    val createdAt: Long
 )

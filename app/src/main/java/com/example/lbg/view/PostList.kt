@@ -31,7 +31,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,7 +39,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.domain.model.post.Post
 import com.example.lbg.UiState
 import com.example.lbg.viewmodel.PostViewModel
-import kotlin.toString
 
 @Composable
 fun PostListScreen(
@@ -50,7 +48,7 @@ fun PostListScreen(
     // Hoist the state from the ViewModel
     val uiState by viewModel.posts.collectAsStateWithLifecycle()
 
-    PostListContent(uiState = uiState)
+   // PostListContent(uiState = uiState)
 }
 
 @Composable
@@ -91,7 +89,7 @@ fun PostListContent(
 @Preview
 @Composable
 fun PreviewPostList() {
-    val mockData = listOf(Post(id = 1, body = "Hello World", title = "fdfdfd", userId = 2))
+    val mockData = listOf(Post(body = "Hello World", id = 1, title = "fdfdfd", userId = 2, createdAt = System.currentTimeMillis()))
     PostListContent(uiState = UiState.Success(mockData))
 }
 
@@ -180,6 +178,6 @@ fun PostCard(
 @Preview
 @Composable
 fun PreviewPostCard() {
-    val mockData = Post(id = 1, body = "Hello World", title = "fdfdfd", userId = 2)
+    val mockData = Post(body = "Hello World", id = 1, title = "fdfdfd", userId = 2, createdAt = System.currentTimeMillis())
     PostCard(post = mockData)
 }

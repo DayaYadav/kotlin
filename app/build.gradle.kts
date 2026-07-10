@@ -81,6 +81,7 @@ dependencies {
 
     //Navigation
     implementation("androidx.navigation:navigation-compose:2.5.3")
+    implementation("androidx.compose.material3:material3:1.3.0") // Or higher
 
     //Mock
     testImplementation("io.mockk:mockk:1.13.2")
