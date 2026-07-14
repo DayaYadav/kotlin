@@ -45,6 +45,7 @@ fun isPalindrome1(input: String): Boolean {
     return cleanInput == cleanInput.reversed()
 }
 
+/*
 fun main() {
     val logs = arrayOf(
         arrayOf("58523", "user_1", "resource_1"),
@@ -65,4 +66,4 @@ fun main() {
     println("\n--- Palindrome Test ---")
     val testString = "A man, a plan, a canal: Panama"
     println("Is \"$testString\" a palindrome? ${isPalindrome(testString)}")
-}
+}*/

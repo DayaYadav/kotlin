@@ -9,4 +9,5 @@ interface PostRepository {
     suspend fun savePost(post: Post)
     suspend fun deletePost(id: Long)
     fun getPosts(): Flow<List<Post>>
+    suspend fun syncPosts(): Result<Unit>   // new
 }

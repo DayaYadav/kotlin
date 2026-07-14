@@ -40,7 +40,7 @@ fun isPalindrome(input: String): Boolean {
     return cleanInput == cleanInput.reversed()
 }
 
-fun main() {
+/*fun main() {
     val testString = "A man, a plan, a canal: Panama"
     println("Is \"$testString\" a palindrome? ${isPalindrome(testString)}")
-}
+}*/

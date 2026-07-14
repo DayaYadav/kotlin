@@ -47,6 +47,7 @@ dependencies {
     implementation(project(":core"))
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.hilt.work)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
@@ -70,7 +71,7 @@ dependencies {
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
    // implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.retrofit2:converter-moshi:2.1.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
@@ -78,6 +79,7 @@ dependencies {
 
   //  implementation(libs.jetbrains.kotlinx.coroutines.android)
     implementation("com.squareup.moshi:moshi-kotlin:1.15.2")
+
 
     //Navigation
     implementation("androidx.navigation:navigation-compose:2.5.3")
@@ -87,7 +89,8 @@ dependencies {
     testImplementation("io.mockk:mockk:1.13.2")
     testImplementation("org.mockito:mockito-core:4.8.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
-    testImplementation("org.mockito:moki-inline:4.10.0")
+    //testImplementation("org.mockito:moki-inline:4.10.0")
+    testImplementation("org.mockito:mockito-inline:4.10.0")
     testImplementation("app.cash.turbine:turbine:0.12.3")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
 

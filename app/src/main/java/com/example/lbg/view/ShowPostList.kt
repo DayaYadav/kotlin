@@ -79,7 +79,6 @@ fun ShowPostList(
             }
         }
     }
-
 }
 
 @Composable
@@ -107,7 +106,8 @@ fun PostCardLayout(item: Post, index: Int, onDelete: (Int) -> Unit) {
                 )
                 IconButton(
                     onClick = {
-                        Toast.makeText(context, "Delete Post at Index: $index", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Delete Post at Index: $index", Toast.LENGTH_SHORT)
+                            .show()
                         onDelete(index)
                     },
                     modifier = Modifier.weight(0.2f)
@@ -122,6 +122,4 @@ fun PostCardLayout(item: Post, index: Int, onDelete: (Int) -> Unit) {
             Text(text = item.body)
         }
     }
-
-
 }
