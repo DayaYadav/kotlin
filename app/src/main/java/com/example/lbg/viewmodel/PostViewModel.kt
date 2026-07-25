@@ -2,6 +2,7 @@ package com.example.lbg.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.PostFlowUsecase
 import com.example.domain.PostUseCase
 import com.example.domain.model.post.Post
 import com.example.lbg.UiState
@@ -13,13 +14,15 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PostViewModel @Inject constructor(private val postUsecase: PostUseCase): ViewModel() {
+class PostViewModel @Inject constructor(private val postUsecase: PostUseCase,
+    private val postFlowUsecase: PostFlowUsecase): ViewModel() {
 
     private var _posts = MutableStateFlow<UiState<List<Post>>>(UiState.Loading)
     val posts = _posts.asStateFlow()
 
     init {
-        fetchPost()
+        //fetchPost()
+        fetchPostFlow()
     }
 
     private fun fetchPost() {
@@ -30,6 +33,14 @@ class PostViewModel @Inject constructor(private val postUsecase: PostUseCase): V
                 _posts.value = UiState.Success(postList)
             } catch (e: Exception) {
                 _posts.value = UiState.Error(e.message ?: "Unknown Error")
+            }
+        }
+    }
+
+    private fun fetchPostFlow() {
+        viewModelScope.launch(Dispatchers.IO) {
+            postFlowUsecase.invokePostList().collect { postList ->
+                _posts.value = UiState.Success(postList)
             }
         }
     }

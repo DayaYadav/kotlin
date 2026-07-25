@@ -2,7 +2,7 @@ package com.example.lbg.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
+// removed unused Arrangement import
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -31,7 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+// removed unused Color import
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,7 +42,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.domain.model.post.Post
 import com.example.lbg.UiState
 import com.example.lbg.viewmodel.PostViewModel
-import kotlin.toString
+// removed unused kotlin.toString import
 
 @Composable
 fun PostListScreen(
@@ -50,7 +52,7 @@ fun PostListScreen(
     // Hoist the state from the ViewModel
     val uiState by viewModel.posts.collectAsStateWithLifecycle()
 
-    PostListContent(uiState = uiState)
+    PostListContent(uiState = uiState, modifier = modifier)
 }
 
 @Composable
@@ -74,17 +76,39 @@ fun PostListContent(
 
             is UiState.Success -> {
                 if (uiState.data.isEmpty()) {
-                    //  EmptyState()
+                    EmptyState()
                 } else {
                     ShowList(uiState.data)
                 }
             }
 
             is UiState.Error -> {
-                // Never leave an Error state empty
-                // ErrorState(message = uiState.message ?: "Unknown Error")
+                // Show a minimal error UI so the caller has feedback
+                ErrorState(message = uiState.message)
             }
         }
+    }
+}
+
+@Composable
+fun EmptyState(message: String = "No posts available") {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Text(
+            text = message,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+    }
+}
+
+@Composable
+fun ErrorState(message: String = "Something went wrong") {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Text(
+            text = message,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.error
+        )
     }
 }
 
@@ -96,19 +120,20 @@ fun PreviewPostList() {
 }
 
 @Composable
-fun ShowList(postList: List<Post>) {
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.Start
+fun ShowList(postList: List<Post>, onPostClick: ((Post) -> Unit)? = null) {
+    val listState = rememberLazyListState()
+
+    LazyColumn(
+        state = listState,
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(vertical = 8.dp)
     ) {
-        LazyColumn {
-            items(
-                items = postList,
-                key = { it.id },
-                contentType = { "item" }     // Group similar items
-            ) { post ->
-                PostCard(post)
-            }
+        items(
+            items = postList,
+            key = { it.id },
+            contentType = { "item" }     // Group similar items
+        ) { post ->
+            PostCard(post = post, onClick = { onPostClick?.invoke(post) })
         }
     }
 }
@@ -119,11 +144,13 @@ fun PostCard(
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null
 ) {
+    val cardModifier = modifier
+        .fillMaxWidth()
+        .padding(horizontal = 16.dp, vertical = 8.dp)
+        .let { if (onClick != null) it.clickable { onClick() } else it }
+
     Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .then(if (onClick != null) Modifier.clickable { onClick() } else Modifier),
+        modifier = cardModifier,
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
